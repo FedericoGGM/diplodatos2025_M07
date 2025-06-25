@@ -1,4 +1,4 @@
-### Check list post reunión con Profe - 24/06/2025
+## Check list post reunión con Profe - 24/06/2025
 - [ ] Usar un trabajo de  base y agregar algunas cosas de Edu al principio como:
   - [ ] La parte de valores no numéricos: no se midio, <x (valor), cantidad de 0 
   - [ ] Agregarle porcentaje en vez de valores absolutos y eliminar aquellos que superen un determinado %, por ejemplo 60%
@@ -10,7 +10,7 @@
  - [ ] Decidir en los casos de que sea <0.005 y <10 ver esos casos normativa o parámetros permitidos
 - [ ] Crear: una matriz de correlación de algunas variables (categóricas y numéricas) y ver cuales agrupar
 
-### Check list post reunión con Profe - 17/06/2025
+## Check list post reunión con Profe - 17/06/2025
 - [x] Nos falta identificar cuales son categóricas y cuales numéricas
 - [x] Eliminar la categoría orden en el grafico box plot
 - [x] Utilizar el gráfico de correlación Código y Gobierno Local
