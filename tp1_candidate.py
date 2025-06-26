@@ -390,10 +390,143 @@ display(mal_cargados.reset_index(drop=True))
 # 
 # Esta revisión general  permite detectar desde el inicio qué variables requieren limpieza o transformación antes de cualquier análisis o modelado más avanzado. También da una idea del nivel de completitud de los datos y de los posibles desafíos que habrá que enfrentar en el preprocesamiento.
 
+# %% [markdown]
+# Previo a continuar con un análisis más detallado de los datos, se observa que:
+# - En muchas variabes numéricas tenemos valores dados por cadenas de caracteres como 'no detectados'. Estos corresponden a valores faltantes, por lo que se transformarán en NaN
+# - Por otro lado, tenemos valores en variables numéricas de la forma '<100', estos corresponden a casos en los que se detectó la sustancia medida, pero no puede determinarse su cantidad al ser esta menor al LOQ. A falta de un mejor criterio, de momento, estos valores se imputarán como 0. Como no hay ceros en las variables numéricas, es seguro haceer esto.
+# - En la variable fecha tenemos strings como "no se midió" o números como 45623, que no corresponden a fechas válidas. Aquellos valores que no tengan la forma dd/mm/aaaa serán pasados a null.
+# - En la variable campaña, tenemos algunos valores con mayúsculas y otros con minúsculas. Se pasan todos a minúscula.
+# - En algunas variables categóricas como olores, color, espumas y mat_susp, en las que los valores admitidos son Ausencia o Presencia, tenemos otros valores asignados, como por ejemplo 'en obra', que corresponden a valores faltantes. Estos se imputan como None
+# - Algo similar ocurre en calidad del auga. Se procede de forma similar.
+
+# %% [markdown]
+# ### Correción fechas como int
+# - Se detectan algunas fechas en formato int como **45623** ó **45628**
+# - Se interpreta como causa la conversión automática que hace Excel si no se le especifica el formato fecha
+# - A continuación se aplica una función de python para detectar dichos casos y convertirlos a formato dd/mm/yyyy
+
 # %%
-# Informacion general
-print("\nInformación general:")
-df.info()
+from datetime import datetime, timedelta
+
+df_fix_date = df.copy(deep=True)
+# Function to convert Excel serial number to date string
+def convert_excel_serial_date(value):
+    # print(type(value))
+    if pd.isna(value):
+        return value
+    elif value == "31/10/0202":
+        return "31/10/2022"
+    elif "/" not in value and "no" not in value:
+        int(value)
+        base_date = datetime(1899, 12, 30)
+        after_value = (base_date + timedelta(days=int(value))).strftime("%d/%m/%Y")
+        print(f"Converting {value} to {after_value}")
+        return after_value
+    return value
+
+# Apply fix
+df_fix_date["fecha"] = df_fix_date["fecha"].apply(convert_excel_serial_date)
+
+# %%
+# Seteamos a NaT los valores de fecha incorrectos para contabilizar correctamente la cantidad de valores nulos
+    # en la columna fecha
+# Ejemplo de DataFrame
+# 1. Convertir a datetime con formato dd/mm/aaaa, forzando errores a NaN
+df2 = df_fix_date.copy(deep=True)
+df2['fecha'] = pd.to_datetime(df_fix_date['fecha'], format='%d/%m/%Y', errors='coerce')
+
+# %%
+'''
+Veamos cuántas columnas numéricas tienen asignados valores no numéricos y cuántos (no se consideran como)
+no numéricos los valores nulos). Además. se verifica cuáles de esos valores se tienen forma '<{n}', con n
+un número. Estos últimos tampoco son contabilizados como no numéricos
+Se cuentan también la cantidad de ceros
+'''
+# Patrón para valores como <n
+patron = re.compile(r'^<\d+\.?\d*$')  # Acepta <3, <3.5, etc.
+
+print("\tColumna\t\t\tValores no numéricos\tValores con forma '<x'\tCantidad de ceros")
+for col in numericas:
+    # Intentar convertir a numérico
+    valores_numericos = pd.to_numeric(df2[col], errors='coerce')
+    no_numericos = df2[col][valores_numericos.isna() & df2[col].notna()]
+    cantidad_ceros = (df2[col] == 0).sum()
+
+    if len(no_numericos) > 0:
+        total_no_numericos = len(no_numericos)
+        valores_menor_que = no_numericos.apply(lambda x: bool(patron.match(str(x)))).sum()
+        print(f"{col:<{25}}\t\t{total_no_numericos-valores_menor_que}\t\t\t{valores_menor_que}\t\t\t{cantidad_ceros}")
+
+# %%
+# Reemplazamos los valores no numéricos y de la forma '<x'
+df3 = df2.copy(deep=True)
+
+for col in numericas:
+    # Convertir valores '<x' a '0'
+    valores = df3[col].astype(str)  # Convertir todo a string para comparar
+    mascara_menor_que = valores.apply(lambda x: bool(patron.match(x)))
+    df3.loc[mascara_menor_que, col] = '0'
+    
+    # Convertir la columna a numérico (los strings no convertibles irán a NaN)
+    df3[col] = pd.to_numeric(df3[col], errors='coerce')
+
+# %%
+# Pasamos todos los valores de campaña a minúscula
+df4 = df3.copy(deep=True)
+df4['campaña'] = df4['campaña'].str.lower().where(df4['campaña'].notna(), None)
+
+# %%
+'''
+En aquellas columnas que sólo admiten valores Asencia/Presencia, imputamos como None aquellos que no
+correspondan a alguna de estas opciones.
+'''
+df5 = df4.copy(deep=True)
+
+cols_a_p = ['olores', 'color', 'espumas', 'mat_susp']
+patron = re.compile(r'^(ausen|presen)', flags=re.IGNORECASE)
+
+for col in cols_a_p:
+    df5[col] = df5[col].where(
+        df5[col].astype(str).str.contains(patron, na=False)
+    )
+
+# %%
+df6 = df5.copy()
+
+opciones_validas_calidad = [
+    'Apta',
+    'Levemente deteriorada',
+    'Deteriorada',
+    'Muy deteriorada',
+    'Extremadamente deteriorada'
+]
+df6['calidad_de_agua'] = df6['calidad_de_agua'].where(df6['calidad_de_agua'].isin(opciones_validas_calidad))
+
+# %%
+"""
+Por último, observo que los valores de las variables Poblacion_partido y Personas_con_cloacas me quedaron como 
+punto flotantes, pues los puntos que separaban cada 3 cifras en español fueron interpretados como comas.
+Arreglo este problema
+"""
+df7 = df6.copy()
+for col in ['Poblacion_partido', 'Personas_con_cloacas']:
+    max_decimales = df7[col].dropna().apply(lambda x: len(str(x).split('.')[1])).max()
+    # Convertir multiplicando por 10^max_decimales
+    df7[col] = (df7[col] * (10 ** max_decimales)).astype('Int64')
+
+# %%
+display(df7.sample(20, random_state=0))
+
+# %%
+# Comparamos info general del dataset original y el corregido
+print("\tColumna\t\t\t\t\tTipo Orig\tNo nulos Orig\tTipo Corr.\tNo nulos Corr.")
+print("")
+for col in df.columns:
+    tipo_dato_original = df[col].dtype
+    tipo_dato_corregido = df7[col].dtype
+    no_nulos_orginal = df[col].count()
+    no_nulos_corregido = df7[col].count()
+    print(f"\t{col[:26]:<{25}}\t\t {str(tipo_dato_original):<{7}}\t   {no_nulos_orginal}\t\t {str(tipo_dato_corregido)[:8]:<{7}}\t\t{no_nulos_corregido}")
 
 # %% [markdown]
 # En la tabla cada fila representa una columna del DataFrame. Esto significa lo siguiente:
@@ -495,7 +628,7 @@ summary.style\
     .background_gradient(cmap="BuGn")\
     .format({"Porcentaje (%)": "{:.2f}"})\
     .apply(resaltar_porcentaje, subset=["Porcentaje (%)"])\
-    .set_caption("Resumen de Datos Faltantes y Inconsistentes")\
+    .set_caption("Resumen de Datos Faltantes e Inconsistentes")\
     .set_properties(**{'text-align': 'center'})
 
 # %% [markdown]
@@ -681,9 +814,5 @@ print(f"Coeficiente de Cramér: {cramer_v:.4f}")
 # La matriz de correlación indicó relaciones positivas y negativas entre ciertas variables, por ejemplo, una correlación positiva moderada entre “Industria Manufacturera” y “Electricidad, gas y agua”, y una correlación negativa fuerte entre “Industria Manufacturera” y “Servicios”. Estas relaciones ayudan a entender la interacción entre variables, identificar redundancias y seleccionar aquellas más relevantes para modelar o interpretar.
 # 
 # Respecto a las unidades, es importante revisar y estandarizar aquellas variables numéricas que puedan estar expresadas en diferentes escalas o formatos, para evitar sesgos en el análisis o modelado.
-
-# %% [markdown]
-# ---
-# # Curación de datos
 
 
