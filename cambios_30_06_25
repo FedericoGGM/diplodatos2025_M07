@@ -37,3 +37,5 @@ CAMBIOS
 - Se modifica conclusiones de boxplot, quitando toda referencia a variables que fueron clasificadas como categóricas
 - Se modifica la intro de correlación
 - Se mueve "from scipy.stats import chi2_contingency" de contingencia al principio
+- Se añade mnatriz de correlación de codigo y gobierno local
+- Se modifican las conclusiones para darles consistencia con lo hecho recien
