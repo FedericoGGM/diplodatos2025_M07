@@ -20,3 +20,13 @@
 - [ ] Lo que dice no se midió en toda una fila, se puede eliminar 
 - [x] Evaluar posibilidades de que hacer con las filas que tienen valores por ejemplo <30 o <2.0, agrupar o no.
 - [x] Ver aquellas filas que contienen 0 si son óptimas o no con respecto a la categoría
+
+# Comandos útiles
+### Convert .ipynb → .py (Notebook to Python script)
+- `jupyter nbconvert --to script your_notebook.ipynb`
+
+### Convert .py → .ipynb (Python script to Notebook)
+- pip install jupytext
+- jupytext --to notebook your_script.py
+To sync both files:
+- jupytext --set-formats ipynb,py your_notebook.ipynb
