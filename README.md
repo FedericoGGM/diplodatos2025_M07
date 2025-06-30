@@ -8,8 +8,8 @@
 - [x] Transformación  o modificación de:
   - Columna fecha: De 50 valores mal cargados, 24 son nulos y el resto es por: no se midió, no se muestreo, o tipeo 31/10/0202 (fueron 2), patrón 45623
 - [x] Ver y determinar cuantos son Los valores < x (valor) :
-- [ ] Decidir qué es mejor: si agregarle 0, sacarle el signo o tomar un rango o limite
- - [ ] Decidir en los casos de que sea <0.005 y <10 ver esos casos normativa o parámetros permitidos
+  - [ ] Decidir qué es mejor: si agregarle 0, sacarle el signo o tomar un rango o limite
+  - [ ] Decidir en los casos de que sea <0.005 y <10 ver esos casos normativa o parámetros permitidos
 - [x] Crear: una matriz de correlación de algunas variables (categóricas y numéricas) y ver cuales agrupar
 
 ## Check list post reunión con Profe - 17/06/2025
