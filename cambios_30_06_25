@@ -1,0 +1,28 @@
+=====================
+CAMBIOS
+=====================
+
+- Modifico el título para resaltarlo más
+- Se eliminaron librerías de sklearn
+- Se importaron funciones de missingno
+- Se agregan algunos títulos
+- Sacar info de LinearRegressor
+- Se reemplaza mensaje "Primeras Filas en dataset" por "Algunas filas en dataset"
+- Se mueve celda que explica qué representa un dataframe a justo debajo de la impresión del muestreo inicial del df
+- Se aclara brevemente criterio para definir clasificación de variables
+- Se añade mensaje para señalar cantidad de variables de cada tipo
+- Se elimina celda de dudas
+- Muevo mi sección de valores no numéricos, de forma < y nulos luego de la definición de variables categóricas. Junto allí nulos, ceros, no numéricos, vacíos, etc.
+- Añado una celda similar para analizar los valores faltantes y vacíos en categóricas
+- Elimino segunda sección de clasificación de variables, y muevo la parte de conteo de valores únicos justo después de completada la clasificación.
+- Uso función de datos faltantes de missingno para graficar. Añadí matriz de correlación entre datos faltantes.
+- Elimino dudas de análisis exploratorio
+- Paso información de celda de corrección de tiempo a la celda donde se señalan problemas encontrados en las demás columnas.
+- Añado comentario en celda de texto explicando que se prosigue a realizar correcciones sobre el dataset
+- Se añade a la misma celda explicación de cambios en columnas de tipo Ausencia/Presencia
+- Se añade en la misma celda explicación de que en campaña se eliminan los valores no correspondientes
+- Se cambia de nombre al dataframe df_fix_date por df1 siguiendo la línea de los casos que siguen
+- Muevo la corrección de las variables antes de los análisis de casos duplicados
+- Se añade visualización de valores de campaña, y se pasan a None los valores no correspondientes.
+- Se modifica la celda de df5 para uniformar los valores de las columnas de tipo Ausencia/Presencia. Se agregan líneas para imprimir el antes y después de la transformación
+- Se añade comentario e impresión del antes y después en la celda de calidad_agua
