@@ -2,9 +2,9 @@
 - [x] Usar un trabajo de  base y agregar algunas cosas de Edu al principio como:
   - [x] La parte de valores no numéricos: no se midio, <x (valor), cantidad de 0 
   - [x] Agregarle porcentaje en vez de valores absolutos
-  - [ ] eliminar aquellos que superen un determinado %, por ejemplo 60%
+  - [ ] eliminar aquellos que superen un determinado %, por ejemplo 60% (falta establecer criterio)
 - [x] Agregar al tp base Clasificación de categóricas y numérica
-- [ ] Diferenciación de Discretas y continuas
+- [x] Diferenciación de Discretas y continuas
 - [x] Transformación  o modificación de:
   - Columna fecha: De 50 valores mal cargados, 24 son nulos y el resto es por: no se midió, no se muestreo, o tipeo 31/10/0202 (fueron 2), patrón 45623
 - [x] Ver y determinar cuantos son Los valores < x (valor) :
