@@ -39,3 +39,4 @@ CAMBIOS
 - Se mueve "from scipy.stats import chi2_contingency" de contingencia al principio
 - Se añade mnatriz de correlación de codigo y gobierno local
 - Se modifican las conclusiones para darles consistencia con lo hecho recien
+- se modificaron las conclusiones
