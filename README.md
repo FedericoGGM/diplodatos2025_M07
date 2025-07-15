@@ -1,3 +1,11 @@
+## Check list post reunión con Profe - 08/07/2025
+- [ ] Hacer cambios a partir del dataframe, deberíamos exportarlo
+- [ ] Eliminar latitud, longitud, fecha 
+- [ ] Eliminar las columnas que superen el 50% de datos faltantes 
+- [ ] Los valores <x, cuyo porcentaje sea menor al 10% se podría tratar como faltante
+- [ ] ver que pasa con la distribución de los valores <x, de ahí ver si dejarlo o eliminarlo
+- [ ] No olvidarse de poner nuestros nombre al principio del tp porque fue una corrección
+
 ## Check list post reunión con Profe - 24/06/2025
 - [ ] Usar un trabajo de  base y agregar algunas cosas de Edu al principio como:
   - [ ] La parte de valores no numéricos: no se midio, <x (valor), cantidad de 0 
