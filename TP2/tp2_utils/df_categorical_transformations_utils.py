@@ -1,4 +1,4 @@
-# utils/df_basic_transformations_utils.py
+# tp2_utils/df_categorical_transformations_utils.py
 
 # Import libraries
 import pandas as pd
@@ -10,7 +10,16 @@ from .variables_classification import VariablesClassification
 
 def _convert_excel_serial_date(value):  # Internal use only
     """
-    Convert a date in Excel serial format to dd/mm/yyyy format
+    Convert a date in Excel serial format to dd/mm/yyyy format.
+
+    Parameters:
+    ---------
+    valuer : str | int
+        Date in excel serial format.
+
+    Returns
+    ---------:
+        Date in dd/mm/yyyy format.
     """
     if pd.isna(value):
         return value
@@ -27,7 +36,19 @@ def apply_date_correction_to_df(df):
     """
     Apply all the corrections to 'fecha' column in the dataframe:
         - Convert a date in Excel serial format to dd/mm/yyyy format.
-        - Convert the time data into pandas datetime objects, imputing non-valid values (strings like 'no se midió' as NaT).
+        - Convert the time data into pandas datetime objects, imputing non-valid values (strings like 'no se midió') as NaT.
+
+    This function doesn´t modify the dataframe in place, but returns a copy of the dataframe with the modified column.
+
+    Parameters:
+    ---------
+    df : pandas.DataFrame
+        The dataframe to modify.
+
+    Returns:
+    ---------
+    df1 : pandas.DataFrame
+        A copy of df with 'fecha' column modified as described above.
     """
     df1 = df.copy(deep=True)
     df1["fecha"] = df1["fecha"].apply(_convert_excel_serial_date)
@@ -36,6 +57,23 @@ def apply_date_correction_to_df(df):
     return df1
 
 def correct_campana(df):
+    """
+    Apply all the corrections to 'campaña' column in the dataframe:
+        - Impute all valid values to lowercase values ('verano', 'otoño', 'invierno', 'primavera').
+        - Impute all non-valid values to None.
+
+    This function doesn´t modify the dataframe in place, but returns a copy of the dataframe with the modified column.
+
+    Parameters:
+    ---------
+    df : pandas.DataFrame
+        The dataframe to modify.
+
+    Returns:
+    ---------
+    df1 : pandas.DataFrame
+        A copy of df with 'campaña' column modified as described above.
+    """
     df1 = df.copy(deep=True)
     # Pasamos todos los valores a minúscula
     df1['campaña'] = df1['campaña'].str.lower().where(df1['campaña'].notna(), None)
@@ -51,7 +89,19 @@ def correct_campana(df):
 def correct_binary_categorical(df):
     '''
     Correct values in binary categorical columns. set to None those values that not correspond to 'Ausencia' or 'Presencia' (or similar options), and set
-    the possible values to 0 ('Ausencia') and 1 ('Presencia')
+    the possible values to 0 ('Ausencia') and 1 ('Presencia').
+
+    This function doesn´t modify the dataframe in place, but returns a copy of the dataframe with the modified columns.
+
+    Parameters:
+    ---------
+    df : pandas.DataFrame
+        The dataframe to modify.
+
+    Returns:
+    ---------
+    df1 : pandas.DataFrame
+        A copy of df with the binary columns modified as described above.
     '''
     # Create a copy of the dataframe
     df1 = df.copy(deep=True)
@@ -81,7 +131,19 @@ def correct_binary_categorical(df):
 
 def correct_calidad_del_agua(df):
     """
-    Set to None the values in column 'caludad_del_agua' that don´t correspond to a valid category.
+    Set to None the non-valid values in column 'calidad_del_agua'.
+
+    This function doesn´t modify the dataframe in place, but returns a copy of the dataframe with the modified column.
+
+    Parameters:
+    ---------
+    df : pandas.DataFrame
+        The dataframe to modify.
+
+    Returns:
+    ---------
+    df1 : pandas.DataFrame
+        A copy of df with 'caldad_del_agua' column modified as described above.
     """
     opciones_validas_calidad = [
         'Apta',
@@ -95,9 +157,21 @@ def correct_calidad_del_agua(df):
     print("Columna 'calidad_de_agua' corregida")
     return df1
 
-def correct_ano(df):
+def correct_year(df):
     """
-    Set to NaN all those values in 'año' column that don´t correspond to a correct value.
+    Set to NaN all the non-valid values in 'año' column.
+
+    This function doesn´t modify the dataframe in place, but returns a copy of the dataframe with the modified column.
+
+    Parameters:
+    ---------
+    df : pandas.DataFrame
+        The dataframe to modify.
+
+    Returns:
+    ---------
+    df1 : pandas.DataFrame
+        A copy of df with 'año' column modified as described above.
     """
     df1 = df.copy(deep=True)
     df1['año'] =  pd.to_numeric(df1['año'], errors='coerce')
@@ -106,7 +180,20 @@ def correct_ano(df):
 
 def imputation_per_muni(df):
     """
-    Impute missing data in variables related with the 2022 census and Programa de Estudios del Conurbano using the 'codigo' variable, only using the first two characters of the value of 'codigo'. Variables 'latitud' and 'longitud' are not imputed by this function.
+    Impute missing data in variables related with the 2022 census and Programa de Estudios del Conurbano using the 'codigo' variable, only using the two first characters
+    of the values in 'codigo'. Variables 'latitud' and 'longitud' are not imputed by this function.
+
+    This function doesn´t modify the dataframe in place, but returns a copy of the dataframe with the modified columns.
+
+    Parameters:
+    ---------
+    df : pandas.DataFrame
+        The dataframe to modify.
+
+    Returns:
+    ---------
+    df1 : pandas.DataFrame
+        A copy of df with the censo columns modified as described above (see tp2_utils/variables_classification.VariablesClassification).
     """
     # Create a copy of the dataframe
     df1 = df.copy(deep=True)

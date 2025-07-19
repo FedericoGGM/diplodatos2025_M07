@@ -1,8 +1,31 @@
-# utils/variable_classification.py
+# tp2_utils/variables_classification.py
 
 class VariablesClassification:
     """
-    This class provides access to variable classification lists through getter methods.
+    A centralized repository for variable classification to data analysis of the project 'El impacto de las condiciones ambientales en la calidad del agua del Río de La
+    Plata'.
+    
+    This class provides organized access to different categories of the variables provided by the project´s database. Variables are classified as continuous, discrete,
+    ordinal, nominal (binary and non-binary), and census-related variables. All variable lists are immutable to maintain data integrity.
+
+    The class provides property decorators for safe access to these classifications without modification risks. The classifications include:
+
+    - Continuous variables (physical/chemical measurements)
+    - Discrete variables (countable quantities)
+    - Ordinal variables (ordered categories)
+    - Nominal variables (categorical data, both binary and non-binary)
+    - Census-derived variables (demographic and economic indicators)
+
+    Example:
+        >>> var_class = VariablesClassification()
+        >>> continuous_vars = var_class.continuas
+        >>> numeric_vars = var_class.numericas
+        >>> 'ph' in continuous_vars
+        True
+
+    Note:
+        All returned collections are immutable (tuples) or copies to prevent accidental modification of the master lists. For census variables, some overlap exists with
+        other categories.
     """
     _continuas = (
         'tem_agua',
@@ -80,48 +103,47 @@ class VariablesClassification:
         'Servicios'
     )
 
-        # Define getters for each attribute
     @property
     def continuas(self):
-        """Returns a copy of the continuous variables list to prevent modification."""
+        """Tuple: Continuous variables list."""
         return self._continuas
 
     @property
     def discretas(self):
-        """Returns a copy of the discrete variables tuple (already immutable)."""
+        """Tuple: Discrete variables."""
         return self._discretas
 
     @property
     def numericas(self):
-        """Returns a copy of the numerical variables tuple (already immutable)."""
+        """Tuple: Numerical variables tuple."""
         return self._continuas + self._discretas
 
     @property
     def ordinales(self):
-        """Returns a copy of the ordinal variables tuple."""
+        """Tuple: Ordinal variables."""
         return self._ordinales
 
     @property
     def nominales_binarias(self):
-        """Returns a copy of the binary nominal variables tuple."""
+        """Tuple: Binary nominal variables."""
         return self._nominales_binarias
 
     @property
     def nominales_no_binarias(self):
-        """Returns a copy of the non-binary nominal variables tuple."""
+        """Tuple: Non-binary nominal variables."""
         return self._nominales_no_binarias
 
     @property
     def todas_las_nominales(self):
-        """Returns a copy of the non-binary nominal variables tuple."""
+        """Tuple: All nominal variables."""
         return self._nominales_binarias + self._nominales_no_binarias
 
     @property
     def categoricas(self):
-        """Returns a copy of the non-binary nominal variables tuple."""
+        """Tuple: All categorical variables."""
         return self._ordinales + self._nominales_binarias + self._nominales_no_binarias
 
     @property
     def censo(self):
-        """Returns a copy of the list of variables got from the 2022 census and Programa de Estudios del Conurbano."""
+        """Tuple: 2022 census and Programa de Estudios del Conurbano related variables."""
         return self._censo
