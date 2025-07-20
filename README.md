@@ -1,3 +1,18 @@
+
+# Observaciones TP2
+
+- La función correct_ano no está definida por lo que es necesario comentarla para evitar error en el notebook:
+
+```
+    'correct_calidad_del_agua',
+    # 'correct_ano',
+    'imputation_per_muni',
+```
+
+---
+
+# Tareas pendientes
+
 ## Check list post reunión con Profe - 08/07/2025
 - [ ] Hacer cambios a partir del dataframe, deberíamos exportarlo
 - [ ] Eliminar latitud, longitud, fecha 

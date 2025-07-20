@@ -38,7 +38,7 @@ def apply_date_correction_to_df(df):
         - Convert a date in Excel serial format to dd/mm/yyyy format.
         - Convert the time data into pandas datetime objects, imputing non-valid values (strings like 'no se midió') as NaT.
 
-    This function doesn´t modify the dataframe in place, but returns a copy of the dataframe with the modified column.
+    This function doesn't modify the dataframe in place, but returns a copy of the dataframe with the modified column.
 
     Parameters:
     ---------
@@ -62,7 +62,7 @@ def correct_campana(df):
         - Impute all valid values to lowercase values ('verano', 'otoño', 'invierno', 'primavera').
         - Impute all non-valid values to None.
 
-    This function doesn´t modify the dataframe in place, but returns a copy of the dataframe with the modified column.
+    This function doesn't modify the dataframe in place, but returns a copy of the dataframe with the modified column.
 
     Parameters:
     ---------
@@ -91,7 +91,7 @@ def correct_binary_categorical(df):
     Correct values in binary categorical columns. set to None those values that not correspond to 'Ausencia' or 'Presencia' (or similar options), and set
     the possible values to 0 ('Ausencia') and 1 ('Presencia').
 
-    This function doesn´t modify the dataframe in place, but returns a copy of the dataframe with the modified columns.
+    This function doesn't modify the dataframe in place, but returns a copy of the dataframe with the modified columns.
 
     Parameters:
     ---------
@@ -117,7 +117,7 @@ def correct_binary_categorical(df):
         # Extract root (first 5-6 letters) from the value
         raiz_valor = df1[col].astype(str).str.extract(patron)[0]
 
-        # Map to 0 or 1 (or NaN if there´s no coincidence)
+        # Map to 0 or 1 (or NaN if there's no coincidence)
         df1[col] = raiz_valor.str.lower().map(
             {
                 'ausen': 0,
@@ -133,7 +133,7 @@ def correct_calidad_del_agua(df):
     """
     Set to None the non-valid values in column 'calidad_del_agua'.
 
-    This function doesn´t modify the dataframe in place, but returns a copy of the dataframe with the modified column.
+    This function doesn't modify the dataframe in place, but returns a copy of the dataframe with the modified column.
 
     Parameters:
     ---------
@@ -161,7 +161,7 @@ def correct_year(df):
     """
     Set to NaN all the non-valid values in 'año' column.
 
-    This function doesn´t modify the dataframe in place, but returns a copy of the dataframe with the modified column.
+    This function doesn't modify the dataframe in place, but returns a copy of the dataframe with the modified column.
 
     Parameters:
     ---------
@@ -183,7 +183,7 @@ def imputation_per_muni(df):
     Impute missing data in variables related with the 2022 census and Programa de Estudios del Conurbano using the 'codigo' variable, only using the two first characters
     of the values in 'codigo'. Variables 'latitud' and 'longitud' are not imputed by this function.
 
-    This function doesn´t modify the dataframe in place, but returns a copy of the dataframe with the modified columns.
+    This function doesn't modify the dataframe in place, but returns a copy of the dataframe with the modified columns.
 
     Parameters:
     ---------

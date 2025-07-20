@@ -11,7 +11,7 @@ __all__ = [
     'correct_campana',
     'correct_binary_categorical',
     'correct_calidad_del_agua',
-    'correct_ano',
+    'correct_year',
     'imputation_per_muni',
 
     # Functions of df_exploration_utils
