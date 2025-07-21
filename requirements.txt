@@ -4,3 +4,4 @@ matplotlib
 seaborn
 missingno
 folium
+ee
