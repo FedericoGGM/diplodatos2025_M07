@@ -4,6 +4,7 @@ from .df_categorical_transformations_utils import *
 from .variables_classification import *
 from .df_exploration_utils import *
 from .df_numerical_transformations import *
+<<<<<<< HEAD
 
 __all__ = [
     # Functions from df_categorical_transformations_utils
@@ -29,5 +30,9 @@ __all__ = [
     'VariablesClassification'
 ]
 
+=======
+from .df_rows_and_columns_remove import *
+from .data_split_and_imputation import *
+>>>>>>> main
 
 __version__ = '1.0.0'

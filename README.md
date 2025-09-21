@@ -13,6 +13,15 @@
 
 # Tareas pendientes
 
+## Entrega TPs
+
+#### TP2
+- Entregado: lunes, 21 de julio de 2025, 23:31
+
+#### TP1
+- Entregado: lunes, 30 de junio de 2025, 22:52
+
+---
 ## Check list post reunión con Profe - 08/07/2025
 - [ ] Hacer cambios a partir del dataframe, deberíamos exportarlo
 - [ ] Eliminar latitud, longitud, fecha 
