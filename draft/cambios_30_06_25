@@ -1,0 +1,42 @@
+=====================
+CAMBIOS
+=====================
+
+- Modifico el título para resaltarlo más
+- Se eliminaron librerías de sklearn
+- Se importaron funciones de missingno
+- Se agregan algunos títulos
+- Sacar info de LinearRegressor
+- Se reemplaza mensaje "Primeras Filas en dataset" por "Algunas filas en dataset"
+- Se mueve celda que explica qué representa un dataframe a justo debajo de la impresión del muestreo inicial del df
+- Se aclara brevemente criterio para definir clasificación de variables
+- Se añade mensaje para señalar cantidad de variables de cada tipo
+- Se elimina celda de dudas
+- Muevo mi sección de valores no numéricos, de forma < y nulos luego de la definición de variables categóricas. Junto allí nulos, ceros, no numéricos, vacíos, etc.
+- Añado una celda similar para analizar los valores faltantes y vacíos en categóricas
+- Elimino segunda sección de clasificación de variables, y muevo la parte de conteo de valores únicos justo después de completada la clasificación.
+- Uso función de datos faltantes de missingno para graficar. Añadí matriz de correlación entre datos faltantes.
+- Elimino dudas de análisis exploratorio
+- Paso información de celda de corrección de tiempo a la celda donde se señalan problemas encontrados en las demás columnas.
+- Añado comentario en celda de texto explicando que se prosigue a realizar correcciones sobre el dataset
+- Se añade a la misma celda explicación de cambios en columnas de tipo Ausencia/Presencia
+- Se añade en la misma celda explicación de que en campaña se eliminan los valores no correspondientes
+- Se cambia de nombre al dataframe df_fix_date por df1 siguiendo la línea de los casos que siguen
+- Muevo la corrección de las variables antes de los análisis de casos duplicados
+- Se añade visualización de valores de campaña, y se pasan a None los valores no correspondientes.
+- Se modifica la celda de df5 para uniformar los valores de las columnas de tipo Ausencia/Presencia. Se agregan líneas para imprimir el antes y después de la transformación
+- Se añade comentario e impresión del antes y después en la celda de calidad_agua
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+- De ahora en más, se modifica el código para trabajar con df7 en lugar de df
+- Muevo a esta parte el análisis de correlación de datos faltantes
+- En los histogramas, uso las listas que definen el tipo de cada variable que tenemos al principio
+- Se comparan histogramas de variables numericas pra df original, df7 y un df8 haciendo lo propuesto por la profe
+- Agrego visión de cómo quedan los ceros una vez aplicada la trafo de imputar los '<x' por cero inmediatamente despues de hacer el cambio.
+- añado histograma de variables categoricas
+- Se modifica celda de introducción a la sección de datos atípicos. Se replica esquema de histogramas de numéricass
+- Se modifica conclusiones de boxplot, quitando toda referencia a variables que fueron clasificadas como categóricas
+- Se modifica la intro de correlación
+- Se mueve "from scipy.stats import chi2_contingency" de contingencia al principio
+- Se añade mnatriz de correlación de codigo y gobierno local
+- Se modifican las conclusiones para darles consistencia con lo hecho recien
+- se modificaron las conclusiones
